@@ -1,41 +1,23 @@
-var builder = WebApplication.CreateBuilder(args);
+using CarStockAPI.Helpers;
+using CarStockAPI.Middleware;
+using FastEndpoints; 
+using DotNetEnv;
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+var builder = WebApplication.CreateBuilder(args);
+// Load environment variables
+DotNetEnv.Env.Load();
+
+builder.Services.AddFastEndpoints();
+
+// initialize database
+DatabaseInitializer.InitializeDatabase();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
+// JWT Middleware
+app.UseMiddleware<AuthMiddleware>();
 
-app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+// use FastEndpoints
+app.UseFastEndpoints();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
