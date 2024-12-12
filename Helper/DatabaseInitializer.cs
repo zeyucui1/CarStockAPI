@@ -14,6 +14,8 @@ public static class DatabaseInitializer
         command.CommandText = @"
             CREATE TABLE IF NOT EXISTS Dealers (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                Username TEXT NOT NULL,
+                Password TEXT NOT NULL,
                 Name TEXT NOT NULL
             );
 
@@ -27,11 +29,15 @@ public static class DatabaseInitializer
                 FOREIGN KEY (DealerId) REFERENCES Dealers(Id)
             );
 
-            INSERT INTO Dealers (Name) VALUES ('City Cars');
-            INSERT INTO Dealers (Name) VALUES ('Mountain Motors');
+            -- Insert sample dealers
+            INSERT INTO Dealers (Username, Password, Name) VALUES ('dealer1', 'password123', 'City Cars');
+            INSERT INTO Dealers (Username, Password, Name) VALUES ('dealer2', 'password456', 'Mountain Motors');
 
+            -- Insert sample cars
             INSERT INTO Cars (DealerId, Make, Model, Year, Stock) VALUES (1, 'Audi', 'A4', 2018, 10);
             INSERT INTO Cars (DealerId, Make, Model, Year, Stock) VALUES (1, 'BMW', 'X5', 2020, 5);
+            INSERT INTO Cars (DealerId, Make, Model, Year, Stock) VALUES (2, 'Toyota', 'Camry', 2019, 8);
+            INSERT INTO Cars (DealerId, Make, Model, Year, Stock) VALUES (2, 'Honda', 'Civic', 2022, 15);
         ";
         command.ExecuteNonQuery();
     }

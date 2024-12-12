@@ -29,12 +29,12 @@ public class AuthController : Endpoint<Dealer>
         try
         {
             using var connection = new SqliteConnection("Data Source=CarStock.db");
-            var query = "SELECT Id, Username, Password, Name FROM Dealers WHERE Username = @Username AND Password = @Password";
-            var dealer = await connection.QuerySingleOrDefaultAsync<Dealer>(query, new { req.Username, req.Password });
+           var query = "SELECT * FROM Dealers WHERE Username = @Username AND Password = @Password LIMIT 1";
+           var dealer = await connection.QuerySingleOrDefaultAsync<Dealer>(query, new { req.Username, req.Password });
 
             if (dealer == null)
             {
-                // 用户不存在，返回 Unauthorized 错误
+                // Unauthorized
                 await SendAsync(new
                 {
                     Error = "Invalid username or password."

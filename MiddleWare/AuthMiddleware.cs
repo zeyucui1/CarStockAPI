@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
-using CarStockAPI.Helpers; 
+using CarStockAPI.Helpers;
 
 namespace CarStockAPI.Middleware;
 
@@ -21,9 +21,23 @@ public class AuthMiddleware
         {
             try
             {
-                //  use JwtHelper to validate token
+                // Validate the JWT and retrieve claims
                 var principal = JwtHelper.ValidateToken(token);
-                context.User = principal; 
+                context.User = principal;
+
+                // Extract DealerId from the JWT claims
+                var dealerIdClaim = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                if (!string.IsNullOrEmpty(dealerIdClaim) && int.TryParse(dealerIdClaim, out var dealerId))
+                {
+                    // Store DealerId in HttpContext for later use
+                    context.Items["DealerId"] = dealerId;
+                }
+                else
+                {
+                    context.Response.StatusCode = 401; // Unauthorized
+                    await context.Response.WriteAsync("Invalid Token: Missing DealerId");
+                    return;
+                }
             }
             catch
             {
@@ -33,7 +47,6 @@ public class AuthMiddleware
             }
         }
 
-        
         await _next(context);
     }
 }

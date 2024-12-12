@@ -6,9 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 namespace CarStockAPI.Helpers;
 
 public static class JwtHelper
-{
-    
-    private static readonly string SecretKey = Environment.GetEnvironmentVariable("JWT_SECRET") ?? "your secret key";
+{    
+    private static readonly string SecretKey = Environment.GetEnvironmentVariable("JWT_SECRET") ?? "YourSuperSecureSecretKey123456789";
 
     public static string GenerateToken(int dealerId, string username)
     {
@@ -16,7 +15,8 @@ public static class JwtHelper
         var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier, dealerId.ToString()),
-            new Claim(ClaimTypes.Name, username)
+            new Claim(ClaimTypes.Name, username),
+            new Claim(ClaimTypes.Role, "Dealer")
         };
 
        
