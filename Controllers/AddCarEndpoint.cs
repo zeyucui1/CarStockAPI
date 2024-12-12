@@ -11,6 +11,7 @@ public class AddCarEndpoint : Endpoint<AddCarRequest>
     {
         Post("/cars/add");
         Roles("Dealer"); 
+        
     }
 
     public override async Task HandleAsync(AddCarRequest req, CancellationToken ct)

@@ -12,6 +12,7 @@ public class AuthController : Endpoint<Dealer>
     {
         Post("/auth/login");
         AllowAnonymous();
+        
     }
 
     public override async Task HandleAsync(Dealer req, CancellationToken ct)

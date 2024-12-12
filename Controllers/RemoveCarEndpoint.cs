@@ -10,7 +10,8 @@ public class RemoveCarEndpoint : Endpoint<RemoveCarRequest>
     public override void Configure()
     {
         Delete("/cars/{id}"); // route parameter
-        Roles("Dealer"); // only dealers can access this endpoint
+        Roles("Dealer"); 
+        
     }
 
     public override async Task HandleAsync(RemoveCarRequest req, CancellationToken ct)
