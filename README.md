@@ -69,7 +69,6 @@ dotnet run
 2. test api at postman or swagger
 
 ## API DESIGN DOCS （I AM using POSTMAN to test all API）
-1. Authentication API
 
 **1\. Login API**
 
@@ -127,7 +126,6 @@ dotnet run
 ```
 After receiving the token, copy it and use it in the Authorization header to test other APIs
 
-2. Add Car API
 
 **2\. Add CAR API**
 
@@ -189,7 +187,7 @@ KEY: Authorization   VALUE: Bearer {JWTToken} (JWT token copy from the login API
 }
 ```
 
-3. Remove Car API
+
 
 **3\. Remove CAR API**
 
@@ -246,7 +244,7 @@ http://localhost:5131/cars/2
 }
 ```
 
-4. List Car API
+
 
 **4\. LIST CAR API**
 
@@ -373,7 +371,7 @@ KEY: Authorization   VALUE: Bearer {JWTToken} (JWT token copy from the login API
     "error": "An error occurred: {ErrorMessage}"
 }
 ```
-6. Search Car API
+
 
 **6\. Search CAR API**
 
