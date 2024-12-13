@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace CarStockAPI.Helpers;
 
+//generating and validating JWT
 public static class JwtHelper
 {    
     private static readonly string SecretKey = Environment.GetEnvironmentVariable("JWT_SECRET") ?? "YourSuperSecureSecretKey123456789";

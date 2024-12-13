@@ -47,7 +47,11 @@ public class AuthController : Endpoint<Dealer>
             var token = JwtHelper.GenerateToken(dealer.Id, dealer.Username);
 
             // return token
-            await SendAsync(new { Token = token });
+        await SendAsync(new
+            {
+                message = "Login successful. Please copy this token to test the rest API.",
+                Token = token
+            }, statusCode: 200); // OK
         }
         catch (Exception ex)
         {

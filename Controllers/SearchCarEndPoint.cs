@@ -21,14 +21,14 @@ public class SearchCarEndpoint : EndpointWithoutRequest
 
             if (string.IsNullOrEmpty(dealerIdClaim))
             {
-                AddError("No valid authentication token found.");
+                AddError("Unauthorized access.");
                 await SendErrorsAsync(401);
                 return;
             }
 
             if (!int.TryParse(dealerIdClaim, out int dealerId))
             {
-                AddError("Invalid Dealer ID in authentication token.");
+                AddError("Unauthorized access.");
                 await SendErrorsAsync(401);
                 return;
             }
